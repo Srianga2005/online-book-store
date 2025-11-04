@@ -1,0 +1,85 @@
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"></script>
+<!-- Toast container -->
+<div aria-live="polite" aria-atomic="true" style="position: fixed; top: 16px; right: 16px; z-index: 1080;">
+  <div id="toast-stack"></div>
+  
+</div>
+<script>
+  var loding = document.getElementById('loding');
+  function funload(){ if(loding){ loding.style.display = 'none'; } }
+
+  // Global toast helper (type: 'success' | 'danger' | 'warning' | 'info')
+  window.showToast = function(type, message){
+    if(typeof type !== 'string' || !type){ type = 'info'; }
+    if(typeof message !== 'string' || !message){ message = 'Action completed.'; }
+    var bg = { success: 'bg-success text-white', danger: 'bg-danger text-white', warning: 'bg-warning', info: 'bg-info text-white' }[type] || 'bg-dark text-white';
+    var id = 't'+Date.now();
+    var html = '\n<div id="'+id+'" class="toast '+bg+'" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000" style="min-width:260px;box-shadow:0 10px 25px rgba(0,0,0,.2);">\n  <div class="toast-body d-flex justify-content-between align-items-center">\n    <span>'+message.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>\n    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true" style="color:white">&times;</span></button>\n  </div>\n</div>';
+    var stack = document.getElementById('toast-stack');
+    if(stack){ stack.insertAdjacentHTML('beforeend', html); $('#'+id).toast('show'); }
+  }
+
+  // Client-side search + pagination for #storebooks-table
+  (function(){
+    function initTableEnhance(){
+      var table = document.getElementById('storebooks-table');
+      if(!table) return;
+      var tbody = table.querySelector('tbody');
+      if(!tbody) return;
+      var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      var container = table.parentElement;
+      // Inject search + page size controls if not present
+      var controls = container.querySelector('.table-controls');
+      if(!controls){
+        controls = document.createElement('div');
+        controls.className = 'table-controls d-flex justify-content-between align-items-center mb-2';
+        controls.innerHTML = '<input id="storebooks-search" class="form-control" style="max-width:260px" placeholder="Search books...">\n<select id="storebooks-size" class="form-control" style="max-width:120px"><option>5</option><option selected>10</option><option>20</option><option>50</option></select>';
+        container.insertBefore(controls, table);
+      }
+      var search = document.getElementById('storebooks-search');
+      var sizeSel = document.getElementById('storebooks-size');
+      var pag = document.getElementById('storebooks-pagination');
+      if(!pag){ pag = document.createElement('div'); pag.id='storebooks-pagination'; pag.className='d-flex justify-content-center mt-2'; container.appendChild(pag); }
+
+      var filtered = rows.slice(0);
+      var pageSize = parseInt(sizeSel.value,10) || 10;
+      var page = 1;
+
+      function render(){
+        // filter
+        var q = (search.value||'').toLowerCase();
+        filtered = rows.filter(function(tr){ return tr.innerText.toLowerCase().indexOf(q) !== -1; });
+        // paginate
+        var total = filtered.length;
+        var pages = Math.max(1, Math.ceil(total / pageSize));
+        if(page>pages) page = pages;
+        // clear tbody
+        tbody.innerHTML = '';
+        var start = (page-1)*pageSize;
+        var end = start + pageSize;
+        filtered.slice(start, end).forEach(function(tr){ tbody.appendChild(tr); });
+        // render pagination
+        pag.innerHTML = '';
+        var ul = document.createElement('ul'); ul.className = 'pagination pagination-sm';
+        function li(txt, p, disabled, active){
+          var li = document.createElement('li'); li.className = 'page-item'+(disabled?' disabled':'')+(active?' active':'');
+          var a = document.createElement('a'); a.className='page-link'; a.href='#'; a.textContent=txt;
+          a.onclick=function(e){ e.preventDefault(); if(disabled||active) return; page=p; render(); };
+          li.appendChild(a); return li;
+        }
+        ul.appendChild(li('«', Math.max(1,page-1), page===1, false));
+        for(var i=1;i<=pages;i++){ ul.appendChild(li(String(i), i, false, i===page)); }
+        ul.appendChild(li('»', Math.min(pages,page+1), page===pages, false));
+        pag.appendChild(ul);
+      }
+      search.addEventListener('input', function(){ page=1; render(); });
+      sizeSel.addEventListener('change', function(){ pageSize=parseInt(sizeSel.value,10)||10; page=1; render(); });
+      render();
+    }
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', initTableEnhance);
+    } else { initTableEnhance(); }
+  })();
+</script>
