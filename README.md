@@ -1,143 +1,248 @@
-# <a href="https://youtu.be/mLFPodZO8Iw" target="_blank"> OnlineBookStore </a> 
-- A Java Web Developement Project
-- **Youtube VIDEO** for step by step Local Setup Guide : https://youtu.be/mLFPodZO8Iw
-- **Youtube VIDEO** for local setup of tender management project: https://www.youtube.com/watch?v=7CE3aY4e644
-<!--Check out the Live website demo: [https://theonlinebookstore.herokuapp.com](https://theonlinebookstore.herokuapp.com)-->
-- User Login Credentials: (shashi/shashi)
-- Admin Login Credentials: (Admin/Admin)
-<hr>
+# Online Bookstore
 
-### About
+![Build](https://github.com/Srianga2005/onlinebookstore/actions/workflows/maven.yml/badge.svg) ![Java](https://img.shields.io/badge/Java-17-007396?logo=java) ![Maven](https://img.shields.io/badge/Maven-WAR-C71A36?logo=apachemaven) ![Servlets](https://img.shields.io/badge/JSP%2FServlets-JavaEE-6DB33F) ![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql) ![License](https://img.shields.io/badge/License-MIT-informational)
 
-A user-friendly Online Bookstore project in which users can log in or register, view the available books, select books along with their quantity, and buy them. Users can also get payment receipts after successful payment. The project can also be used by the administrator, who can add new books, remove books, increase and decrease the quantity of books, change the price of the books as well as maintain the selling history of books.
+Production-ready Java web application for managing an online bookstore with customer checkout and an admin dashboard (books, users, orders, payments).
 
-![onlinebookstore](https://user-images.githubusercontent.com/34605595/137615096-8447d32d-bddc-4f13-a8ed-3c0f4dd5e04e.png)
+This README describes the current project only. All old links, screenshots, and third‑party references were removed.
 
-<span style="color:blue">**This Website is built for following purpose:-**</span>
-- For Selling books online.
-- Maintaining books selling history.
-- Adding and managing books.
-- User Friendly.
-- For Implementation of Http Servlets in Java.
-- This is a Mini-project developed using Java, Jdbc, And Servlets.
+## Features
+- Admin dashboard with stats (orders, revenue, trends)
+- Manage books (add, update, inventory)
+- Manage users and orders with search/pagination
+- Payments view with filters (All / This month / Today)
+- Checkout flow for customers (Pay & Place Order)
+- UTF‑8 throughout; robust error handling
 
-<span style="color:blue">**Admin Have Following Access for this online store site:-**</span>
-- Add New Books.
-- View Books Available.
-- Remove Books.
-- Increase Books Amount.
+## Tech Stack
+- Java 17, Maven (WAR)
+- JSP, Servlets, JDBC
+- MySQL (database: onlinebookstore)
+- Embedded Tomcat via webapp‑runner
+- Vanilla JS + simple CSS (no external frameworks required)
 
-<span style="color:blue">**Users Have Following Access for this online store site:-**</span>
-- Create New Account or Register.
-- Login.
-- View Available Books.
-- Select Books to Buy.
-- Select Books Quantity.
-- Buy Books.
-- Get Payment Receipt.
+## Requirements
+- Java 17
+- Maven 3.8+
+- MySQL Server
 
-### Technologies used:-
-1. Front-End Development:
-- HTML
-- CSS
-- Javascript
-- BootStrap
-
-2. Back-End Development:
-- Java [JDK 8+]
-- JDBC
-- Servlet
-
-3. Database:
-- MySql
-
-### ================ Software And Tools Required ================
-- : Git [https://www.youtube.com/watch?v=gv7VPQ4LZ7g]
-- : Java JDK 8+ [https://www.youtube.com/watch?v=O9PWH9SeTTE]
-- : Eclipse EE (Enterprise Edition) [https://www.youtube.com/watch?v=8aDsEV7txXE]
-- : Apache Maven [https://www.youtube.com/watch?v=jd2zx3dLjuw]
-- : Tomcat v8.0+ [https://youtu.be/mLFPodZO8Iw?t=903]
-- : MySQL Server [https://www.youtube.com/watch?v=Ydh5jYA6Frs]
-- : MySQL Workbench (optional) [https://www.youtube.com/watch?v=t79oCeTXHwg]
-
-### ================= Dummy Database Initialization =================
-
-STEP 1: Open MySQL Command Prompt or MySQL Workbench
-
-STEP 2: Login to the administrator user as : ```mysql -u <username> -p``` (Enter Password if asked)
-
-STEP 3: Copy paste the following MySql Commands-
-```MySQL
-create database if not exists onlinebookstore;
-
-use onlinebookstore;
-
-create table if not exists books(barcode varchar(100) primary key, name varchar(100), author varchar(100), price int, quantity int);
-
-create table if not exists users(username varchar(100) primary key,password varchar(100), firstname varchar(100),
-    lastname varchar(100),address text, phone varchar(100),mailid varchar(100),usertype int);
-
-insert into books values('9780134190563','The Go Programming Language','Alan A. A. Donovan and Brian W. Kernighan',400,8);
-insert into books values('9780133053036','C++ Primer','Stanley Lippman and Josée Lajoie and Barbara Moo',976,13);
-insert into books values('9781718500457','The Rust Programming Language','Steve Klabnik and Carol Nichols',560,12);
-insert into books values('9781491910740','Head First Java','Kathy Sierra and Bert Bates and Trisha Gee',754,23);
-insert into books values('9781492056300','Fluent Python','Luciano Ramalho',1014,5);
-insert into books values('9781720043997','The Road to Learn React','Robin Wieruch',239,18);
-insert into books values('9780132350884','Clean Code: A Handbook of Agile Software Craftsmanship','Robert C Martin',288,3);
-insert into books values('9780132181273','Domain-Driven Design','Eric Evans',560,28);
-insert into books values('9781951204006','A Programmers Guide to Computer Science','William Springer',188,4);
-insert into books values('9780316204552','The Soul of a New Machine','Tracy Kidder',293,30);
-insert into books values('9780132778046','Effective Java','Joshua Bloch',368,21);
-insert into books values('9781484255995','Practical Rust Projects','Shing Lyu',257,15);
-insert into users values('demo','demo','Demo','User','Demo Home','42502216225','demo@gmail.com',2);
-insert into users values('Admin','Admin','Mr.','Admin','Haldia WB','9584552224521','admin@gmail.com',1);
-insert into users values('shashi','shashi','Shashi','Raj','Bihar','1236547089','shashi@gmail.com',2);
-
-commit;
+## Database Setup (MySQL)
+1) Create database and tables (minimal):
 
 ```
+CREATE DATABASE IF NOT EXISTS onlinebookstore;
+USE onlinebookstore;
 
-### ========== Importing and Running The Project Through Eclipse EE ==========
+CREATE TABLE IF NOT EXISTS users (
+  username VARCHAR(100) PRIMARY KEY,
+  password VARCHAR(100),
+  firstname VARCHAR(100),
+  lastname VARCHAR(100),
+  address TEXT,
+  phone VARCHAR(100),
+  mailid VARCHAR(100),
+  usertype INT
+);
 
-Step 0: Open Eclipse Enterprise Edition. [Install, if not already installed.]
+CREATE TABLE IF NOT EXISTS books (
+  barcode VARCHAR(100) PRIMARY KEY,
+  name VARCHAR(100),
+  author VARCHAR(100),
+  price INT,
+  quantity INT
+);
 
-Step 1: Click On File > Import > Git > Projects From Git > Clone Uri > Paste The Repository Url as: ```https://github.com/shashirajraja/onlinebookstore.git```> Select master Branch > Next > Next > Finish.
+-- orders and order_items assumed present in this project
+```
 
-Step 2. a: Go inside ```src/main/resources > application.properties``` and update the value of database details as per your usage, like db.driver, db.host, db.username and db.password according to your installed mysql/postgresql admin user credentials.
+2) Update DB credentials in the code if needed (DBUtil) and ensure MySQL is running.
 
-Step 2.b: Right Click on Project > Run as > Maven Build > In the goals field enter "clean install" > apply > run
+## Run (Local)
+1) Build the WAR:
 
-Step 2.c: Right Click On Project > Build Path > Configure Build Path > Libraries > Remove and Update Any Libraries if Red Mark Exists > Finish.
+```
+mvn clean package -DskipTests
+```
 
-Step 3: [Only If Tomcat Server is not configured in Eclipse] : Right Click On Project > Run As > Run On Server > Select Tomcat V8.0 > (Select Tomcat V8.0 Installation Location If Asked) Next > Add onlinebookstore > Finish.
+2) Start the embedded server:
 
-Step 4: In The Server Tab > Double Click On Tomcat Server > Ports > Change The Port Number For Http/1.1 To 8083 > Close And Save.
+```
+start-server.bat
+```
 
-Step 5: Right Click On Project > Run As > Run On Server > Select Tomcat v8.0 > Next > Add All> Done.
+3) Open the app:
 
-Step 6: Check Running The Site At  <a href="http://localhost:8083/onlinebookstore/">http://localhost:8083/onlinebookstore/</a>
+```
+http://localhost:8083/onlinebookstore/
+```
 
-Step 7: Default Username And Password For Admin Is "Admin" And "Admin"
+Admin pages:
+- /onlinebookstore/admin-dashboard
+- /onlinebookstore/admin/manage-books.jsp
+- /onlinebookstore/admin/users.jsp
+- /onlinebookstore/manageorders
+- /onlinebookstore/admin/payments.jsp
 
-Step 8: The default Username And Password For User Is "Srianga Kinkar Nayak" And "chintu@2005"
+## Demo Logins
+- Admin:
+  - Username: admin
+  - Password: admin123
+- User:
+  - Username: chintu
+  - Password: chintu
 
-## FAQ
-**Question:1** Unable to Connect to Database?
+## Admin
 
-**Answer:** Please check you have installed the mysql correctly and have updated the correct db details in application.properties file. Also you can try doing maven clean install and force update the project and restart.
-<hr>
+> Screens below illustrate the admin experience. Place your images in `docs/screenshots/` using the suggested names, or adjust the paths if you use different filenames.
 
-Note:- Considering this as a Sample Project, we have not much considered of web security.
-#### Some Screenshots for the project:
-<img width="941" alt="image" src="https://user-images.githubusercontent.com/34605595/224769637-37c34d4b-26e7-4d49-b990-4c09b260ec31.png">
-<img width="954" alt="image" src="https://user-images.githubusercontent.com/34605595/224769990-f440f74d-41b2-4629-ba1c-a87267f225d9.png">
-<img width="930" alt="image" src="https://user-images.githubusercontent.com/34605595/224770145-5902054f-5943-44ac-b02f-92097c8a6972.png">
-<img width="934" alt="image" src="https://user-images.githubusercontent.com/34605595/224770257-e18a3810-0457-4b78-bf46-cf82746708ee.png">
-<img width="946" alt="image" src="https://user-images.githubusercontent.com/34605595/224770392-5a5478d2-98cc-44ee-8689-132b6b16af80.png">
+1) Home / Landing
 
+![Home landing](docs/screenshots/home-landing.png)
 
-#### "Suggestions and project improvement ideas are welcomed!"
+Description: Public landing page with navigation, quick access to customer login and discovery actions.
 
-<bold>Thanks a lot,</bold><br/>
-                                                                                                        Project Leader<br/>
-                                                                                                         <b>Srianga Kinkar Nayak</b>
+2) Admin Dashboard
+
+![Admin dashboard](docs/screenshots/admin-dashboard.png)
+
+Description: Overview of total orders, books, today’s sales, users, and pending orders. Left sidebar shows the monthly revenue pill with trend.
+
+3) Users Management
+
+![Users page](docs/screenshots/admin-users.png)
+
+Description: Searchable and paginated user list with quick stats (Total, Active, Blocked, Admin). Actions available per user row.
+
+4) Book Management Cards
+
+![Book management cards](docs/screenshots/book-management-cards.png)
+
+Description: Quick actions for Add Books, Edit Books, Search Books, Users, Orders, and Reviews.
+
+5) Add Book Form
+
+![Add book form](docs/screenshots/add-book-form.png)
+
+Description: Form to create a new book with name, author, price, quantity, category, description, and optional image URL.
+
+6) Orders Management
+
+![Orders management](docs/screenshots/admin-orders.png)
+
+Description: Orders table with quick status cards, filter by status, fast search, and client-side pagination. Supports status updates.
+
+## Users
+
+> Screens below illustrate the customer experience. Place images in `docs/screenshots/` with the suggested names or adjust paths.
+
+1) Customer Home
+
+![Customer home](docs/screenshots/user-home.png)
+
+Description: Welcome hero, search bar, quick cards for delivery, payment security, and quality assurance.
+
+2) Browse Books
+
+![Browse books](docs/screenshots/user-browse-books.png)
+
+Description: Catalog with category chips, pricing, ratings, stock badges, and Add to Cart actions.
+
+3) Shopping Cart
+
+![Shopping cart](docs/screenshots/user-cart.png)
+
+Description: Cart summary with quantity controls, remove action, and order summary panel.
+
+4) Checkout
+
+![Checkout](docs/screenshots/user-checkout.png)
+
+Description: Order summary at the top followed by billing information form.
+
+5) Payment Section
+
+![Payment section](docs/screenshots/user-payment-section.png)
+
+Description: Card number, cardholder, expiry, and CVV fields with a prominent Pay & Place Order button.
+
+## Troubleshooting
+- If build fails to clean target on Windows, stop the running server window and rebuild.
+- Ensure MySQL is running and credentials match the DB settings.
+- Clear browser cache/hard refresh (Ctrl+F5) after redeploys.
+
+## Notes
+- Default credentials are configurable; avoid hardcoding sensitive data.
+- Remove demo data on production.
+
+## About Me
+Hi, I'm Srianga Kinkar Nayak — a Java developer focused on building practical, clean web apps. I enjoy designing admin dashboards, polishing UI/UX, and wiring robust backend logic with JSP/Servlets and MySQL.
+
+Focus areas for this project:
+- Admin experience: metrics, payments filters, orders/users management
+- Checkout flow and receipts
+- Modern, responsive styling with lightweight JS
+
+## Contact
+- GitHub: https://github.com/Srianga2005
+- Email: sriangnayak@gmail.com
+- LinkedIn: https://www.linkedin.com/in/srianga-kinkar-nayak-20703a341
+
+## Project Structure
+```
+onlinebookstore-master/
+├─ WebContent/                 # JSPs, static assets
+│  ├─ admin/                   # Admin JSPs (dashboard, users, payments, etc.)
+│  └─ WEB-INF/                 # web.xml
+├─ src/main/java/
+│  ├─ com/bittercode/model/    # POJOs: Book, Order, OrderItem, User
+│  ├─ com/bittercode/service/  # Service interfaces
+│  ├─ com/bittercode/service/impl/  # JDBC implementations
+│  └─ servlets/                # Controllers/Servlets
+├─ docs/screenshots/           # README images
+├─ pom.xml                     # Maven build
+└─ start-server.bat            # Run via embedded Tomcat
+```
+
+## URL Map
+- Home: `/onlinebookstore/`
+- Browse Books: `/onlinebookstore/ViewBooks.jsp`
+- Cart: `/onlinebookstore/Cart.jsp`
+- Checkout: `/onlinebookstore/checkout`
+- Admin Dashboard: `/onlinebookstore/admin-dashboard`
+- Manage Books: `/onlinebookstore/admin/manage-books.jsp`
+- Users: `/onlinebookstore/admin/users.jsp`
+- Orders: `/onlinebookstore/manageorders`
+- Payments: `/onlinebookstore/admin/payments.jsp`
+
+## Database Tables (overview)
+- `users(username, password, firstname, lastname, address, phone, mailid, usertype)`
+- `books(barcode, name, author, price, quantity)`
+- `orders(order_id, user_email, total_amount, status, shipping_address, order_date)`
+- `order_items(order_item_id, order_id, book_barcode, quantity, price)`
+
+## Scripts
+- Build: `mvn clean package -DskipTests`
+- Run: `start-server.bat` (serves at `http://localhost:8083/onlinebookstore/`)
+
+## Roadmap
+- Payments page: add export CSV and date range picker
+- Orders page: bulk status update, advanced filters
+- Inventory: low-stock alerts, CSV import
+- Auth: password reset and roles hardening
+
+## Contributing
+PRs and suggestions are welcome. Please: 
+- Keep code formatted and avoid adding external libs unless necessary.
+- Include a short description and screenshots for UI changes.
+
+## Credits / Acknowledgements
+- Built by Srianga Kinkar Nayak.
+- Thanks to open‑source communities around Java, JSP/Servlets, Maven, and MySQL.
+
+## Changelog
+- 2025-11-06: New Admin and Users screenshots, polished sidebar metric, payments page hardening, README overhaul.
+- 2025-11-05: Admin dashboard metrics and styling updates; payments filters; users/orders table search/pagination.
+- 2025-11-04: Initial project setup with embedded Tomcat runner and MySQL integration.
+
+## License
+MIT License. You are free to use, copy, modify, and distribute this project with proper attribution. Suitable for educational and portfolio use.
